@@ -41,7 +41,7 @@ eng=int(input("영어 점수:"))
 math=int(input("수학 점수:"))
 sql="""
       INSERT INTO student(name,kor,eng,math)
-      VALUES(%s,%s,%s,%s)
+      VALUES(:0,:1,:2,:3)
      """
 data=(name,kor,eng,math)
 cur.execute(sql,data)
@@ -50,7 +50,7 @@ cur.close()
 conn.close()
 print("저장 완료")
 '''
-'''
+
 # 멀티 데이터 
 item=[
     ('이산',90,80,70),
@@ -61,14 +61,16 @@ sql="""
     INSERT INTO student(name,kor,eng,math)
     VALUES(%s,%s,%s,%s) 
     """
-for row in item:
-    cur.execute(sql,row)
+#for row in item:
+    #cur.execute(sql,row)
+cur.executemany(sql,item)
 # commit 전송 
 conn.commit()
 print("데이터 첨부 완료")
 # 닫기 
 cur.close()
 conn.close()
+
 '''
 hakbun=int(input("삭제할 학번 입력"))
 sql=f"DELETE FROM student WHERE hakbun={hakbun}"
@@ -87,3 +89,4 @@ print("삭제 완료")
 # 분석 : Konlp , 웹 Django
 # ElasticSearch : 검색엔진 AWS
 # Spring  - Boot / React => 32일
+'''
